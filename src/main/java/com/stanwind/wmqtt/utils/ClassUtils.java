@@ -21,8 +21,9 @@ public class ClassUtils {
         Iterator<Class<?>> iterator = classList.iterator();
         while (iterator.hasNext()) {
             Class<?> next = iterator.next();
-            if (!next.isAnnotationPresent(annotationClass))
+            if (!next.isAnnotationPresent(annotationClass)) {
                 iterator.remove();
+            }
         }
         return classList;
     }
@@ -53,7 +54,7 @@ public class ClassUtils {
                     return (file.isFile() && file.getName().endsWith(".class")) || file.isDirectory();
                 }
             });
-            if (files != null)
+            if (files != null) {
                 for (File file : files) {
                     String fileName = file.getName();
                     if (file.isFile()) {
@@ -74,6 +75,7 @@ public class ClassUtils {
                         addClass(classList, subPackagePath, subPackageName);
                     }
                 }
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

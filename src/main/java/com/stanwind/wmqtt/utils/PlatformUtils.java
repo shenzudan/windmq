@@ -49,7 +49,7 @@ public class PlatformUtils {
             while (addresses.hasMoreElements()) {
                 ip = (InetAddress) addresses.nextElement();
                 if (ip != null && ip instanceof Inet4Address) {
-                    if (ip.getHostAddress().equals("127.0.0.1")) {
+                    if ("127.0.0.1".equals(ip.getHostAddress())) {
                         continue;
                     }
                     return MACAddress(netInterface);

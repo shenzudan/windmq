@@ -85,8 +85,6 @@ public class MqttJsonMessageMapper implements BytesMessageMapper {
 
     @Override
     public byte[] fromMessage(Message<?> message) {
-//        Object payload = encrypt.isEncrypt(message) ? message.getPayload()
-//                : encrypt.doDecrypt(((String) message.getPayload()).getBytes(StandardCharsets.UTF_8));
         Object payload = message.getPayload();
         String str = JSONObject.toJSONString(payload);
         byte[] bytes = str.getBytes(StandardCharsets.UTF_8);

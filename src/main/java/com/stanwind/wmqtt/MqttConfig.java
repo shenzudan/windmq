@@ -55,7 +55,7 @@ public class MqttConfig {
     public static final String INSTANCE_ID_T = "instanceId";
     public static final String DEVICE_ID = "{" + DEVICE_ID_T + "}";
 
-    //实例标志 MAC_PORT
+    /** 实例标志 MAC_PORT */
     private static String L_INSTANCE_ID = "";
 
     public MqttPahoMessageDrivenChannelAdapter adapter;

@@ -63,7 +63,7 @@ public class TopicPattern {
         }
 
         topicPatternDefinition.getId2pos().forEach((key, value) -> values.put(key, m.group(value + 1)));
-//        System.out.println(m.groupCount() + " --- " + values);
+
         return values;
     }
 

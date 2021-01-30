@@ -17,9 +17,8 @@ import org.springframework.util.ReflectionUtils;
 @AllArgsConstructor
 @Slf4j
 public class MQTTHandlerTask implements Runnable {
-    //把注册过处理器的spring bean都存到这
+    /**把注册过处理器的spring bean都存到这 */
     public static final Map<Class<?>, Object> map = new ConcurrentHashMap<>();
-
     private MsgHandlerDefinition definition;
     private MQTTMsg msg;
 
