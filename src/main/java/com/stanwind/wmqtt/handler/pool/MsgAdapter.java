@@ -70,6 +70,6 @@ public class MsgAdapter {
     }
 
     public void processMsg(MQTTMsg msg) {
-        MsgHandlerPool.Instance.getInstance().submitTask(new MQTTHandlerTask(this.handler, msg));
+        MsgHandlerPool.Instance.getInstance().submitTask(new MQTTHandlTask(this.handler, msg));
     }
 }

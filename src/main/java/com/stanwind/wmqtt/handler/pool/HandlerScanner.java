@@ -52,7 +52,7 @@ public class HandlerScanner implements ApplicationListener<ContextRefreshedEvent
                             MsgAdapter.registFuzzyTopic(def.getTopic(), adapter);
                         }
 
-                        MQTTHandlerTask.map.put(beanType, bean);
+                        MQTTHandlTask.map.put(beanType, bean);
                     }
                 }
             }

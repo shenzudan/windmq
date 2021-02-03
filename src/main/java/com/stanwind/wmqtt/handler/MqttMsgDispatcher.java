@@ -1,10 +1,12 @@
 package com.stanwind.wmqtt.handler;
 
+import static com.stanwind.wmqtt.beans.Constant.CHANNEL_NAME_IN;
+
 import com.alibaba.fastjson.JSONObject;
 import com.stanwind.wmqtt.MqttConfig;
 import com.stanwind.wmqtt.handler.pool.MQTTMsg;
 import com.stanwind.wmqtt.handler.pool.MsgAdapter;
-import com.stanwind.wmqtt.message.MqttResponse;
+import com.stanwind.wmqtt.beans.MqttResponse;
 import com.stanwind.wmqtt.service.IMessageService;
 import com.stanwind.wmqtt.utils.Tools;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +32,7 @@ public class MqttMsgDispatcher implements MessageHandler {
     @Autowired
     private IMessageService messageService;
 
-    @ServiceActivator(inputChannel = MqttConfig.CHANNEL_NAME_IN)
+    @ServiceActivator(inputChannel = CHANNEL_NAME_IN)
     @Override
     public void handleMessage(Message<?> message) throws MessagingException {
         String topic = message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC, String.class);
@@ -70,8 +72,7 @@ public class MqttMsgDispatcher implements MessageHandler {
                 //遍历匹配开始结束
                 MsgAdapter adapter = MsgAdapter.transRegAdapter(topic);
                 if (adapter != null) {
-                    adapter.processMsg(new MQTTMsg(TopicPattern.getValueMap(topic, adapter.getHandler()
-                            .getPatternDefinition()), topic, payload));
+                    adapter.processMsg(new MQTTMsg(adapter.getHandler().getPatternDefinition(), null, topic, payload));
                     return;
                 }
             }

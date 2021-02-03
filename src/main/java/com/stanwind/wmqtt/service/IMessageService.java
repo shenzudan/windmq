@@ -1,7 +1,7 @@
 package com.stanwind.wmqtt.service;
 
-import com.stanwind.wmqtt.message.MqttRequest;
-import com.stanwind.wmqtt.message.MqttResponse;
+import com.stanwind.wmqtt.beans.MqttRequest;
+import com.stanwind.wmqtt.beans.MqttResponse;
 import org.springframework.messaging.Message;
 
 /**

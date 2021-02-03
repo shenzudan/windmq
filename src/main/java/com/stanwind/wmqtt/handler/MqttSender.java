@@ -1,5 +1,7 @@
 package com.stanwind.wmqtt.handler;
 
+import static com.stanwind.wmqtt.beans.Constant.CHANNEL_NAME_OUT;
+
 import com.stanwind.wmqtt.MqttConfig;
 import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.integration.mqtt.support.MqttHeaders;
@@ -14,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @date :  2020-11-10 19:54
  **/
 @Component
-@MessagingGateway(defaultRequestChannel = MqttConfig.CHANNEL_NAME_OUT)
+@MessagingGateway(defaultRequestChannel = CHANNEL_NAME_OUT)
 public interface MqttSender {
     /**
      * 发送信息到MQTT服务器

@@ -2,9 +2,9 @@ package com.stanwind.wmqtt.service;
 
 import com.stanwind.wmqtt.anno.Topic;
 import com.stanwind.wmqtt.handler.MqttSender;
-import com.stanwind.wmqtt.message.CommonResponse;
-import com.stanwind.wmqtt.message.MqttRequest;
-import com.stanwind.wmqtt.message.MqttResponse;
+import com.stanwind.wmqtt.beans.CommonResponse;
+import com.stanwind.wmqtt.beans.MqttRequest;
+import com.stanwind.wmqtt.beans.MqttResponse;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;

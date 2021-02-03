@@ -1,4 +1,4 @@
-package com.stanwind.wmqtt.message;
+package com.stanwind.wmqtt.beans;
 
 import java.io.Serializable;
 import lombok.AllArgsConstructor;

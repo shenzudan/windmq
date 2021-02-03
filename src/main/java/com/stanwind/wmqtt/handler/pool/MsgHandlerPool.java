@@ -24,17 +24,14 @@ public class MsgHandlerPool {
     private MsgHandlerPool() {
         if (poolExecutor == null) {
             int processorNum = Runtime.getRuntime().availableProcessors();
-            int corePoolSize = processorNum + 32;
-            int maxSize = processorNum + 32;
+            int corePoolSize = processorNum * 2 + 1;
+            int maxSize = processorNum * 2 + 1;
             poolExecutor = new ThreadPoolExecutor(corePoolSize, maxSize, KEEP_ALIVE_TIME, TimeUnit.SECONDS,
-                    new LinkedBlockingQueue(QUEUE_SIZE), new ThreadFactory() {
-                @Override
-                public Thread newThread(Runnable r) {
-                    Thread thread = new Thread(r, "MQTTMsgHandlerPoolThread_" + MsgHandlerPool.tId.getAndIncrement());
-                    thread.setDaemon(false);
-                    return thread;
-                }
-            });
+                    new LinkedBlockingQueue<>(QUEUE_SIZE), r -> {
+                        Thread thread = new Thread(r, "MQTTMsgHandlerPoolThread_" + MsgHandlerPool.tId.getAndIncrement());
+                        thread.setDaemon(false);
+                        return thread;
+                    });
         }
     }
 

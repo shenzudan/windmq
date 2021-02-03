@@ -1,4 +1,4 @@
-package com.stanwind.wmqtt.message;
+package com.stanwind.wmqtt.beans;
 
 import com.stanwind.wmqtt.anno.Topic;
 import lombok.Data;

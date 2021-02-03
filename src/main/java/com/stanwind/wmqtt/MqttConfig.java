@@ -1,5 +1,7 @@
 package com.stanwind.wmqtt;
 
+import static com.stanwind.wmqtt.beans.Constant.CHANNEL_NAME_OUT;
+
 import com.stanwind.wmqtt.auth.ClientApi;
 import com.stanwind.wmqtt.auth.SettingFactory;
 import com.stanwind.wmqtt.auth.aliyun.AliApi;
@@ -48,17 +50,10 @@ import org.springframework.util.StringUtils;
 @IntegrationComponentScan(basePackages = "com.stanwind.wmqtt")
 public class MqttConfig {
 
-    public static final String CHANNEL_NAME_OUT = "mqttOutboundChannel";
-    public static final String CHANNEL_NAME_IN = "mqttInboundChannel";
-    public static final String DEVICE_ID_T = "deviceId";
-    public static final String TASK_ID_T = "taskId";
-    public static final String INSTANCE_ID_T = "instanceId";
-    public static final String DEVICE_ID = "{" + DEVICE_ID_T + "}";
-
     /** 实例标志 MAC_PORT */
     private static String L_INSTANCE_ID = "";
 
-    public MqttPahoMessageDrivenChannelAdapter adapter;
+
 
     @Value("${mqtt.server-uris}")
     @Getter
@@ -81,43 +76,43 @@ public class MqttConfig {
     @Value("${mqtt.aliyun:false}")
     private Boolean aliyun;
 
-    @Value("${mqtt.ali-instance}")
+    @Value("${mqtt.ali-instance:}")
     private String aliInstance;
 
-    @Value("${mqtt.access-key}")
+    @Value("${mqtt.access-key:}")
     private String accessKey;
 
-    @Value("${mqtt.secret-key}")
+    @Value("${mqtt.secret-key:}")
     private String secretKey;
 
-    @Value("${mqtt.username}")
+    @Value("${mqtt.username:}")
     private String username;
 
-    @Value("${mqtt.password}")
+    @Value("${mqtt.password:}")
     private String password;
 
-    @Value("${mqtt.keep-alive-interval}")
+    @Value("${mqtt.keep-alive-interval:}")
     private int keepAliveInterval;
 
-    @Value("${mqtt.sub-topics}")
+    @Value("${mqtt.sub-topics:}")
     private String[] subTopics;
 
-    @Value("${mqtt.message-mapper}")
+    @Value("${mqtt.message-mapper:}")
     private Class<? extends BytesMessageMapper> mapperClass;
 
-    @Value("${mqtt.client-id-prefix}")
+    @Value("${mqtt.client-id-prefix:}")
     @Getter
     private String clientIdPrefix;
 
-    @Value("${mqtt.acl.read}")
+    @Value("${mqtt.acl.read:}")
     @Getter
     private String aclRead;
 
-    @Value("${mqtt.acl.write}")
+    @Value("${mqtt.acl.write:}")
     @Getter
     private String aclWrite;
 
-    @Value("${mqtt.enc-table}")
+    @Value("${mqtt.enc-table:}")
     @Getter
     private String encTable;
 
@@ -179,6 +174,10 @@ public class MqttConfig {
         return new BytesMessageConverter(bytesMessageMapper);
     }
 
+    /**
+     * 实例名规则
+     * @return
+     */
     public String getInstanceId() {
         if (StringUtils.isEmpty(L_INSTANCE_ID)) {
             L_INSTANCE_ID = PlatformUtils.getMACAddress() + "_" + serverProperties.getPort();
@@ -224,7 +223,6 @@ public class MqttConfig {
         adapter.setOutputChannel(mqttInboundChannel());
         adapter.setCompletionTimeout(5000);
         adapter.setQos(1);
-        this.adapter = adapter;
         log.info("inbound: {}", clientId);
 
         return adapter;
@@ -240,20 +238,8 @@ public class MqttConfig {
         return new DirectChannel();
     }
 
-
-    public void addTopic(String... topic) {
-        adapter.addTopic(topic);
-    }
-
-    public void addTopic(String topic, int qos) {
-        adapter.addTopic(topic, qos);
-    }
-
-    public void addTopics(String[] topic, int[] qos) {
-        adapter.addTopics(topic, qos);
-    }
-
-    public void removeTopic(String... topic) {
-        adapter.removeTopic(topic);
+    @Bean
+    public ProducerHolder getWindmq(MessageProducer producer) {
+        return new ProducerHolder((MqttPahoMessageDrivenChannelAdapter) producer);
     }
 }

@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
- * TopicPattern
+ * TopicPattern 正则topic匹配
  *
  * @author : Stan
  * @version : 1.0
@@ -30,7 +30,7 @@ public class TopicPattern {
     }
 
     public static TopicPatternDefinition prepare(String topic) {
-        Map<String, Integer> id2pos = new HashMap();
+        Map<String, Integer> id2pos = new HashMap<>();
 
         Matcher m = pp.matcher(topic);
         int i = 0;

@@ -3,7 +3,7 @@ package com.stanwind.wmqtt.security;
 import java.io.Serializable;
 
 /**
- * EncryptTable
+ * EncryptTable  demo data
  *
  * @author : Stan
  * @version : 1.0

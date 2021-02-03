@@ -1,7 +1,8 @@
 package com.stanwind.wmqtt.utils;
 
 
-import static com.stanwind.wmqtt.MqttConfig.INSTANCE_ID_T;
+import static com.stanwind.wmqtt.beans.Constant.DEVICE_ID_T;
+import static com.stanwind.wmqtt.beans.Constant.INSTANCE_ID_T;
 
 import com.stanwind.wmqtt.MqttConfig;
 import com.stanwind.wmqtt.handler.MqttContext;
@@ -23,7 +24,7 @@ public abstract class BaseTopicHandler {
     private MqttConfig mqttConfig;
 
     /**
-     * 转换工具
+     * sn转换工具
      */
     public String getSn(String clientId) {
         return stcUtil.cli2sn(clientId);
@@ -47,7 +48,7 @@ public abstract class BaseTopicHandler {
      * 仅可获取topic中匹配的deviceId
      */
     public String getSn() {
-        return getSn(getParam(MqttConfig.DEVICE_ID_T));
+        return getSn(getParam(DEVICE_ID_T));
     }
 
 

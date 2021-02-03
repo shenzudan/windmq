@@ -15,7 +15,7 @@
 - MQTT客户端登录凭证分配(ACL支持阿里云\EMQ目前只支持账号密码，可自定义实现)
 - 适合低端设备的查表加密协议(详情见: com.stanwind.wmqtt.security.TableMsgEncrypt)
 - 高可用部署(多实例不同clientID上线，EMQ有提供共享订阅，但是阿里云只能靠规则引擎转发MQ，我们线上使用全盘负责机制，谁发命令谁处理)
-- 消息处理池(CPU核心数+32, )
+- 消息处理池(CPU核心数*2 + 1, )
 - Topic注解匹配消息处理,支持模糊匹配(正则实现，可取topic路径参数)和精确匹配
 
 ### spring-boot依赖
@@ -37,7 +37,7 @@
 - topic中{instanceId}表示匹配当前实例ID，{deviceId}表示匹配当前设备序列号(详情: com.stanwind.wmqtt.MqttConfig)
 
 ### 使用样例
-- 临时订阅/取消(注入MqttConfig)
+- 临时订阅/取消(注入ProducerHolder)
 ```java
 void addTopic(String... topic);
 void addTopic(String topic, int qos);
