@@ -1,6 +1,5 @@
 package com.stanwind.wmqtt;
 
-import lombok.AllArgsConstructor;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 
 /**
@@ -10,9 +9,12 @@ import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannel
  * @version : 1.0
  * @date :  2021-02-03 12:00 PM
  **/
-@AllArgsConstructor
 public class ProducerHolder {
     public final MqttPahoMessageDrivenChannelAdapter adapter;
+
+    public ProducerHolder(MqttPahoMessageDrivenChannelAdapter adapter) {
+        this.adapter = adapter;
+    }
 
     public MqttPahoMessageDrivenChannelAdapter getAdapter() {
         return adapter;

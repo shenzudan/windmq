@@ -1,13 +1,14 @@
 package com.stanwind.wmqtt.service;
 
 import com.stanwind.wmqtt.anno.Topic;
-import com.stanwind.wmqtt.handler.MqttSender;
 import com.stanwind.wmqtt.beans.CommonResponse;
 import com.stanwind.wmqtt.beans.MqttRequest;
 import com.stanwind.wmqtt.beans.MqttResponse;
+import com.stanwind.wmqtt.handler.MqttSender;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.channel.RendezvousChannel;
 import org.springframework.messaging.Message;
@@ -21,8 +22,9 @@ import org.springframework.stereotype.Service;
  * @date :  2020-11-10 19:53
  **/
 @Service
-@Slf4j
 public class MessageServiceImpl implements IMessageService {
+
+    private static final Logger log = LoggerFactory.getLogger(MessageServiceImpl.class);
 
     private Map<String, RendezvousChannel> topicSubscribers = new ConcurrentHashMap<>();
 

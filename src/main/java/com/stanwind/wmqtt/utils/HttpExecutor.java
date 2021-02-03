@@ -1,8 +1,11 @@
 package com.stanwind.wmqtt.utils;
 
+import com.stanwind.wmqtt.MQTTSubscribedListener;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.LinkedList;
@@ -12,8 +15,6 @@ import javax.annotation.PostConstruct;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -35,6 +36,8 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -45,8 +48,10 @@ import org.springframework.stereotype.Component;
  * @date :  2020-11-11 16:42
  **/
 @Component
-@Slf4j
 public class HttpExecutor {
+
+    private static final Logger log = LoggerFactory.getLogger(HttpExecutor.class);
+
     protected CloseableHttpClient httpClient;
 
     protected PoolingHttpClientConnectionManager manager;
@@ -65,9 +70,8 @@ public class HttpExecutor {
         return 200;
     }
 
-    @SneakyThrows
     @PostConstruct
-    protected void initHttpClient() {
+    protected void initHttpClient() throws NoSuchAlgorithmException, KeyManagementException {
         //        //HTTPS
         SSLContext ctx = SSLContext.getInstance("TLS");
 //         debug 信任所有

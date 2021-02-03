@@ -13,10 +13,12 @@ import com.stanwind.wmqtt.message.BytesMessageConverter;
 import com.stanwind.wmqtt.security.DefMessageEncrypt;
 import com.stanwind.wmqtt.security.IMsgEncrypt;
 import com.stanwind.wmqtt.security.TableMsgEncrypt;
+import com.stanwind.wmqtt.utils.HttpExecutor;
 import com.stanwind.wmqtt.utils.PlatformUtils;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,33 +46,31 @@ import org.springframework.util.StringUtils;
  * @version : 1.0
  * @date :  2020-11-10 19:18
  **/
-@Slf4j
 @Configuration
 @EnableIntegration
 @IntegrationComponentScan(basePackages = "com.stanwind.wmqtt")
 public class MqttConfig {
 
-    /** 实例标志 MAC_PORT */
+    private static final Logger log = LoggerFactory.getLogger(MqttConfig.class);
+
+    /**
+     * 实例标志 MAC_PORT
+     */
     private static String L_INSTANCE_ID = "";
 
-
-
     @Value("${mqtt.server-uris}")
-    @Getter
     private String[] serverURIs;
 
     /**
      * 缺省外网地址则返回统一地址 否则返回该
      */
     @Value("${mqtt.pub-server-uris:}")
-    @Getter
     private String[] pubServerURIs;
 
     /**
      * wss
      */
     @Value("${mqtt.websocket-uri:}")
-    @Getter
     private String[] websocketUri;
 
     @Value("${mqtt.aliyun:false}")
@@ -97,28 +97,87 @@ public class MqttConfig {
     @Value("${mqtt.sub-topics:}")
     private String[] subTopics;
 
-    @Value("${mqtt.message-mapper:}")
+    @Value("${mqtt.message-mapper:com.stanwind.wmqtt.message.MqttJsonMessageMapper}")
     private Class<? extends BytesMessageMapper> mapperClass;
 
     @Value("${mqtt.client-id-prefix:}")
-    @Getter
     private String clientIdPrefix;
 
     @Value("${mqtt.acl.read:}")
-    @Getter
     private String aclRead;
 
     @Value("${mqtt.acl.write:}")
-    @Getter
     private String aclWrite;
 
     @Value("${mqtt.enc-table:}")
-    @Getter
     private String encTable;
 
     @Value("${mqtt.enc-count:0}")
-    @Getter
     private Integer encCount;
+
+    public String[] getServerURIs() {
+        return serverURIs;
+    }
+
+    public String[] getPubServerURIs() {
+        return pubServerURIs;
+    }
+
+    public String[] getWebsocketUri() {
+        return websocketUri;
+    }
+
+    public Boolean getAliyun() {
+        return aliyun;
+    }
+
+    public String getAliInstance() {
+        return aliInstance;
+    }
+
+    public String getAccessKey() {
+        return accessKey;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getKeepAliveInterval() {
+        return keepAliveInterval;
+    }
+
+    public String[] getSubTopics() {
+        return subTopics;
+    }
+
+    public String getClientIdPrefix() {
+        return clientIdPrefix;
+    }
+
+    public String getAclRead() {
+        return aclRead;
+    }
+
+    public String getAclWrite() {
+        return aclWrite;
+    }
+
+    public String getEncTable() {
+        return encTable;
+    }
+
+    public Integer getEncCount() {
+        return encCount;
+    }
 
     @Autowired
     private ServerProperties serverProperties;
@@ -151,7 +210,6 @@ public class MqttConfig {
 
     /**
      * //固定为查表加密
-     * @return
      */
     @Bean
     public IMsgEncrypt messageEncrypt() {
@@ -165,8 +223,8 @@ public class MqttConfig {
     }
 
     @Bean
-    public MqttMessageConverter bytesMessageConverter(@Value("${mqtt.model-packages}") String modelPackages
-    , IMsgEncrypt encrypt)
+    public MqttMessageConverter bytesMessageConverter(@Value("${mqtt.model-packages:com.stanwind.wmqtt.message}") String modelPackages
+            , IMsgEncrypt encrypt)
             throws NoSuchMethodException {
         BytesMessageMapper bytesMessageMapper =
                 BeanUtils.instantiateClass(mapperClass.getConstructor(String.class, IMsgEncrypt.class)
@@ -176,7 +234,6 @@ public class MqttConfig {
 
     /**
      * 实例名规则
-     * @return
      */
     public String getInstanceId() {
         if (StringUtils.isEmpty(L_INSTANCE_ID)) {

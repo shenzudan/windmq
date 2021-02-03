@@ -3,8 +3,6 @@ package com.stanwind.wmqtt.handler.pool;
 import com.stanwind.wmqtt.handler.TopicPattern;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  * MsgAdapter 协议分拨器 目前先String消息 直接解析TOPIC
@@ -13,14 +11,21 @@ import lombok.Getter;
  * @version : 1.0
  * @date :  2020-11-11 17:49
  **/
-@AllArgsConstructor
 public class MsgAdapter {
+
     private static Map<String /* TOPIC */, MsgAdapter> FULL_TOPIC = new ConcurrentHashMap();
     private static Map<String /* TOPIC */, MsgAdapter> FUZZY_TOPIC = new ConcurrentHashMap();
     private static Map<String /* TOPIC */, MsgAdapter> REG_TOPIC = new ConcurrentHashMap();
 
-    @Getter
-    private MsgHandlerDefinition handler = null;
+    public MsgAdapter(MsgHandlerDefinition handler) {
+        this.handler = handler;
+    }
+
+    private final MsgHandlerDefinition handler;
+
+    public MsgHandlerDefinition getHandler() {
+        return handler;
+    }
 
     public static MsgAdapter valueOf(MsgHandlerDefinition definition) {
         return new MsgAdapter(definition);
@@ -70,6 +75,6 @@ public class MsgAdapter {
     }
 
     public void processMsg(MQTTMsg msg) {
-        MsgHandlerPool.Instance.getInstance().submitTask(new MQTTHandlTask(this.handler, msg));
+        MsgHandlerPool.Instance.getInstance().submitTask(new MQTTHandleTask(this.handler, msg));
     }
 }

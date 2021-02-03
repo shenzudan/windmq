@@ -14,4 +14,5 @@ public class Constant {
     public static final String TASK_ID_T = "taskId";
     public static final String INSTANCE_ID_T = "instanceId";
     public static final String DEVICE_ID = "{" + DEVICE_ID_T + "}";
+    public static final String BASE_MSG_PACKAGE = "com.stanwind.wmqtt.message";
 }

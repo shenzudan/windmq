@@ -8,7 +8,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.integration.mapping.BytesMessageMapper;
 import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.integration.support.MessageBuilder;
@@ -21,8 +22,9 @@ import org.springframework.messaging.Message;
  * @version : 1.0
  * @date :  2020-11-10 19:42
  **/
-@Slf4j
 public class MqttJsonMessageMapper implements BytesMessageMapper {
+
+    private static final Logger log = LoggerFactory.getLogger(MqttJsonMessageMapper.class);
 
     private static Map<String, Class> mapper = new HashMap<>();
 

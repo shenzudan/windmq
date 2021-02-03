@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import lombok.Data;
-import lombok.experimental.Accessors;
 
 /**
  * TopicPattern 正则topic匹配
@@ -20,13 +18,38 @@ public class TopicPattern {
     final static String pt = "\\{" + ptn + "\\}";
     final static Pattern pp = Pattern.compile(pt);
 
-    @Data
-    @Accessors(chain = true)
     public static class TopicPatternDefinition {
 
         String regTxt;
         Pattern pattern;
         Map<String, Integer> id2pos;
+
+        public TopicPatternDefinition setRegTxt(String regTxt) {
+            this.regTxt = regTxt;
+            return this;
+        }
+
+        public TopicPatternDefinition setPattern(Pattern pattern) {
+            this.pattern = pattern;
+            return this;
+        }
+
+        public TopicPatternDefinition setId2pos(Map<String, Integer> id2pos) {
+            this.id2pos = id2pos;
+            return this;
+        }
+
+        public String getRegTxt() {
+            return regTxt;
+        }
+
+        public Pattern getPattern() {
+            return pattern;
+        }
+
+        public Map<String, Integer> getId2pos() {
+            return id2pos;
+        }
     }
 
     public static TopicPatternDefinition prepare(String topic) {

@@ -5,7 +5,8 @@ import com.stanwind.wmqtt.handler.TopicPattern;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Objects;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -21,8 +22,9 @@ import org.springframework.stereotype.Component;
  * @date :  2020-11-11 18:45
  **/
 @Component
-@Slf4j
 public class HandlerScanner implements ApplicationListener<ContextRefreshedEvent> {
+
+    private static final Logger log = LoggerFactory.getLogger(HandlerScanner.class);
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -48,11 +50,11 @@ public class HandlerScanner implements ApplicationListener<ContextRefreshedEvent
                             MsgAdapter.registFullTopic(def.getTopic(), adapter);
                         } else if (regFuzzy((TopicHandler) anno)) {
                             MsgAdapter.registRegTopic(def.getPatternDefinition().getRegTxt(), adapter);
-                        } else  {
+                        } else {
                             MsgAdapter.registFuzzyTopic(def.getTopic(), adapter);
                         }
 
-                        MQTTHandlTask.map.put(beanType, bean);
+                        MQTTHandleTask.map.put(beanType, bean);
                     }
                 }
             }

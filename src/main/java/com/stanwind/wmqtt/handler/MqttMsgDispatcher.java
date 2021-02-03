@@ -3,13 +3,13 @@ package com.stanwind.wmqtt.handler;
 import static com.stanwind.wmqtt.beans.Constant.CHANNEL_NAME_IN;
 
 import com.alibaba.fastjson.JSONObject;
-import com.stanwind.wmqtt.MqttConfig;
+import com.stanwind.wmqtt.beans.MqttResponse;
 import com.stanwind.wmqtt.handler.pool.MQTTMsg;
 import com.stanwind.wmqtt.handler.pool.MsgAdapter;
-import com.stanwind.wmqtt.beans.MqttResponse;
 import com.stanwind.wmqtt.service.IMessageService;
 import com.stanwind.wmqtt.utils.Tools;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.mqtt.support.MqttHeaders;
@@ -26,9 +26,9 @@ import org.springframework.stereotype.Service;
  * @date :  2020-11-10 19:55
  **/
 @Service
-@Slf4j
 public class MqttMsgDispatcher implements MessageHandler {
 
+    private static final Logger log = LoggerFactory.getLogger(MqttMsgDispatcher.class);
     @Autowired
     private IMessageService messageService;
 

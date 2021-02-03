@@ -3,24 +3,33 @@ package com.stanwind.wmqtt.handler.pool;
 import com.stanwind.wmqtt.handler.MqttContext;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.ReflectionUtils;
 
 /**
- * MQTTHandlerTask 处理任务
+ * MQTTHandleTask 处理任务
  *
  * @author : Stan
  * @version : 1.0
  * @date :  2020-11-11 17:51
  **/
-@AllArgsConstructor
-@Slf4j
-public class MQTTHandlTask implements Runnable {
-    /**把注册过处理器的spring bean都存到这 */
+
+public class MQTTHandleTask implements Runnable {
+
+    private static final Logger log = LoggerFactory.getLogger(MQTTHandleTask.class);
+
+    /**
+     * 把注册过处理器的spring bean都存到这
+     */
     public static final Map<Class<?>, Object> map = new ConcurrentHashMap<>();
     private MsgHandlerDefinition definition;
     private MQTTMsg msg;
+
+    public MQTTHandleTask(MsgHandlerDefinition definition, MQTTMsg msg) {
+        this.definition = definition;
+        this.msg = msg;
+    }
 
     @Override
     public void run() {

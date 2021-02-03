@@ -1,13 +1,11 @@
 package com.stanwind.wmqtt.beans;
 
 import com.stanwind.wmqtt.anno.Topic;
-import lombok.Data;
 
 /**
  * 通用回复
  */
 @Topic("IOT_SERVER/reply/{deviceId}")
-@Data
 public class CommonResponse extends MqttResponse {
 
     /**
@@ -17,6 +15,14 @@ public class CommonResponse extends MqttResponse {
      * 3.不支持
      */
     private byte result;
+
+    public byte getResult() {
+        return result;
+    }
+
+    public void setResult(byte result) {
+        this.result = result;
+    }
 
     public CommonResponse() {
     }

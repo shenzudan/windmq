@@ -1,12 +1,14 @@
 package com.stanwind.wmqtt.security;
 
 import com.stanwind.wmqtt.MqttConfig;
+import com.stanwind.wmqtt.handler.pool.HandlerScanner;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 import javax.annotation.PostConstruct;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -16,8 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @version : 1.0
  * @date :  2020-11-20 16:17
  **/
-@Slf4j
 public class TableMsgEncrypt extends IotDeviceMessageEncrypt {
+
+    private static final Logger log = LoggerFactory.getLogger(TableMsgEncrypt.class);
 
     public static final Integer INDEX_LEN = 2;
 

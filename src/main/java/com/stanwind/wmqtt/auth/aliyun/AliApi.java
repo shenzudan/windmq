@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.stanwind.wmqtt.auth.ClientApi;
 import com.stanwind.wmqtt.auth.beans.AuthBean;
 import com.stanwind.wmqtt.auth.beans.ConnData;
+import com.stanwind.wmqtt.message.MqttJsonMessageMapper;
 import com.stanwind.wmqtt.utils.HttpExecutor;
 import com.stanwind.wmqtt.utils.Tools;
 import java.io.IOException;
@@ -12,7 +13,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -22,8 +24,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @version : 1.0
  * @date :  2020-11-11 16:36
  **/
-@Slf4j
 public class AliApi implements ClientApi {
+
+    private static final Logger log = LoggerFactory.getLogger(AliApi.class);
 
     /**
      * token服务地址，参考文档获取 https://help.aliyun.com/document_detail/54226.html?spm=a2c4g.11186623.6.559.6ccf5695eZsC77
@@ -63,7 +66,8 @@ public class AliApi implements ClientApi {
         return httpExecutor.doGet(getUrl(API_ONLINE_NUM), params);
     }
 
-    public String applyToken(List<String> topics, String action, Long expire) throws InvalidKeyException, NoSuchAlgorithmException {
+    public String applyToken(List<String> topics, String action, Long expire)
+            throws InvalidKeyException, NoSuchAlgorithmException {
         Map<String, String> paramMap = new HashMap<>();
         Collections.sort(topics);
         StringBuilder builder = new StringBuilder();
@@ -92,11 +96,9 @@ public class AliApi implements ClientApi {
 
     /**
      * 获取登录数据
+     *
      * @param readTopics
      * @param writeTopics
-     * @return
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeyException
      */
     @Override
     public ConnData getTokenConn(List<String> readTopics, List<String> writeTopics) throws Exception {

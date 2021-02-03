@@ -5,11 +5,6 @@ import com.stanwind.wmqtt.handler.TopicPattern.TopicPatternDefinition;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * MQTTMsg 消息定义
@@ -18,11 +13,6 @@ import lombok.extern.slf4j.Slf4j;
  * @version : 1.0
  * @date :  2020-11-11 17:42
  **/
-@Accessors(chain = true)
-@NoArgsConstructor
-@AllArgsConstructor
-@Slf4j
-@Data
 public class MQTTMsg implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,7 +25,42 @@ public class MQTTMsg implements Serializable {
     private Object payload;
 
     public MQTTMsg(String topic, Object payload) {
+        this(null, null, topic, payload);
+    }
+
+    public MQTTMsg(TopicPatternDefinition patternDefinition, Map<String, String> values, String topic,
+            Object payload) {
+        this.patternDefinition = patternDefinition;
+        this.values = values;
         this.topic = topic;
+        this.payload = payload;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public TopicPatternDefinition getPatternDefinition() {
+        return patternDefinition;
+    }
+
+    public void setPatternDefinition(TopicPatternDefinition patternDefinition) {
+        this.patternDefinition = patternDefinition;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public Object getPayload() {
+        return payload;
+    }
+
+    public void setPayload(Object payload) {
         this.payload = payload;
     }
 
