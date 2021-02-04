@@ -10,6 +10,7 @@
   <packaging>jar</packaging>
   <name>windmq</name>
   <description>Mqtt rapid development lib based on springboot</description>
+  <url>https://gitee.com/sense7/windmq</url>
 
   <scm>
     <url>https://gitee.com/sense7/windmq</url>
@@ -37,12 +38,12 @@
     </developer>
   </developers>
 
-<!--  <parent>-->
-<!--    <groupId>org.springframework.boot</groupId>-->
-<!--    <artifactId>spring-boot-starter-parent</artifactId>-->
-<!--    <version>2.0.7.RELEASE</version>-->
-<!--    <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
-<!--  </parent>-->
+  <!--  <parent>-->
+  <!--    <groupId>org.springframework.boot</groupId>-->
+  <!--    <artifactId>spring-boot-starter-parent</artifactId>-->
+  <!--    <version>2.0.7.RELEASE</version>-->
+  <!--    <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+  <!--  </parent>-->
   <properties>
     <fastjson.version>1.2.51</fastjson.version>
     <springboot.version>2.0.7.RELEASE</springboot.version>
@@ -181,19 +182,14 @@
             <goals>
               <goal>sign</goal>
             </goals>
+            <configuration>
+              <executable>gpg</executable>
+              <homedir>${gpg.homedir}</homedir>
+              <keyname>${gpg.keyname}</keyname>
+              <passphrase>${gpg.passphrase}</passphrase>
+            </configuration>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.7</version>
-        <extensions>true</extensions>
-        <configuration>
-          <serverId>ossrh</serverId>
-          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
-        </configuration>
       </plugin>
     </plugins>
   </build>
