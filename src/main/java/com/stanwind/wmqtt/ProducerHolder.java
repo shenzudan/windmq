@@ -20,18 +20,36 @@ public class ProducerHolder {
         return adapter;
     }
 
+    /**
+     * 订阅topic
+     * @param topic
+     */
     public void addTopic(String... topic) {
         adapter.addTopic(topic);
     }
 
+    /**
+     * 订阅topic
+     * @param topic
+     * @param qos
+     */
     public void addTopic(String topic, int qos) {
         adapter.addTopic(topic, qos);
     }
 
+    /**
+     * 订阅topic
+     * @param topic
+     * @param qos
+     */
     public void addTopics(String[] topic, int[] qos) {
         adapter.addTopics(topic, qos);
     }
 
+    /**
+     * 移除订阅topic
+     * @param topic
+     */
     public void removeTopic(String... topic) {
         adapter.removeTopic(topic);
     }

@@ -2,7 +2,6 @@ package com.stanwind.wmqtt.handler;
 
 import static com.stanwind.wmqtt.beans.Constant.CHANNEL_NAME_OUT;
 
-import com.stanwind.wmqtt.MqttConfig;
 import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.handler.annotation.Header;

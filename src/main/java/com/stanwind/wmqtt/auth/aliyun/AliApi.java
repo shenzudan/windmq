@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.stanwind.wmqtt.auth.ClientApi;
 import com.stanwind.wmqtt.auth.beans.AuthBean;
 import com.stanwind.wmqtt.auth.beans.ConnData;
-import com.stanwind.wmqtt.message.MqttJsonMessageMapper;
 import com.stanwind.wmqtt.utils.HttpExecutor;
 import com.stanwind.wmqtt.utils.Tools;
 import java.io.IOException;
@@ -54,6 +53,13 @@ public class AliApi implements ClientApi {
         return ENDPOINT.replace("{INSTANCE}", authBean.getInstanceId()) + path;
     }
 
+    /**
+     * 获取mqtt在线数
+     * @param clientId
+     * @return api返回结果
+     * @throws InvalidKeyException
+     * @throws NoSuchAlgorithmException
+     */
     public String queryForOnlineNum(String clientId) throws InvalidKeyException, NoSuchAlgorithmException {
         Map<String, String> params = new HashMap<>();
         params.put("accessKey", authBean.getAccessKey());
@@ -66,6 +72,15 @@ public class AliApi implements ClientApi {
         return httpExecutor.doGet(getUrl(API_ONLINE_NUM), params);
     }
 
+    /**
+     * acl获取token
+     * @param topics
+     * @param action
+     * @param expire
+     * @return token
+     * @throws InvalidKeyException
+     * @throws NoSuchAlgorithmException
+     */
     public String applyToken(List<String> topics, String action, Long expire)
             throws InvalidKeyException, NoSuchAlgorithmException {
         Map<String, String> paramMap = new HashMap<>();

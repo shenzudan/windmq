@@ -11,5 +11,14 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
  * @date :  2020-11-11 15:40
  **/
 public interface SettingFactory {
+
+    /**
+     * 置入基础数据生成统一连接数据
+     * @param serverURIs
+     * @param keepAliveInterval
+     * @param authBean
+     * @return
+     * @throws Exception
+     */
     MqttConnectOptions set(String[] serverURIs, Integer keepAliveInterval, AuthBean authBean) throws Exception;
 }

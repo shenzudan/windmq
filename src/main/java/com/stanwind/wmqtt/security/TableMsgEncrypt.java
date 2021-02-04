@@ -109,6 +109,11 @@ public class TableMsgEncrypt extends IotDeviceMessageEncrypt {
         return convert(ENC_TABLE[index], d);
     }
 
+    /**
+     * bytes到HEX
+     * @param b
+     * @return
+     */
     public static String writeBytes(byte[] b) {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
@@ -179,6 +184,11 @@ public class TableMsgEncrypt extends IotDeviceMessageEncrypt {
         System.out.println(new String());
     }
 
+    /**
+     * 加密表计算解密表
+     * @param encryptTable
+     * @return
+     */
     public static int[] calcDecryptTable(int[] encryptTable) {
         int[] t = new int[encryptTable.length];
         for (int i = 0; i < encryptTable.length; i++) {
@@ -188,7 +198,12 @@ public class TableMsgEncrypt extends IotDeviceMessageEncrypt {
         return t;
     }
 
-
+    /**
+     * 根据表加/解密
+     * @param tableLine
+     * @param data
+     * @return
+     */
     public static byte[] convert(int[] tableLine, byte[] data) {
         for (int i = 0; i < data.length; i++) {
             data[i] = (byte) tableLine[data[i] & 0xff];
@@ -212,7 +227,11 @@ public class TableMsgEncrypt extends IotDeviceMessageEncrypt {
         return arr;
     }
 
-
+    /**
+     * u2 convert
+     * @param s
+     * @return
+     */
     public static byte[] unsignedShortToByte2(int s) {
         byte[] targets = new byte[2];
         targets[0] = (byte) (s >> 8 & 0xFF);
@@ -235,6 +254,11 @@ public class TableMsgEncrypt extends IotDeviceMessageEncrypt {
         return sb.toString().trim();
     }
 
+    /**
+     * bytes转hex
+     *
+     * @param bytes
+     */
     public static String byteToHex(byte[] bytes) {
         String strHex = "";
         StringBuilder sb = new StringBuilder("");
@@ -246,7 +270,7 @@ public class TableMsgEncrypt extends IotDeviceMessageEncrypt {
     }
 
     /**
-     * hex转byte数组
+     * hex转int数组
      *
      * @param hex
      */
@@ -263,6 +287,11 @@ public class TableMsgEncrypt extends IotDeviceMessageEncrypt {
         return ret;
     }
 
+    /**
+     * hex 转 bytes
+     * @param hex
+     * @return
+     */
     public static byte[] hexToByteb(String hex) {
         int m = 0, n = 0;
         int byteLen = hex.length() / 2; // 每两个字符描述一个字节

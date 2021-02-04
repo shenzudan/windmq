@@ -3,7 +3,7 @@ package com.stanwind.wmqtt.auth.beans;
 import java.io.Serializable;
 
 /**
- * Conndata
+ * Conndata mqtt连接数据
  *
  * @author : Stan
  * @version : 1.0

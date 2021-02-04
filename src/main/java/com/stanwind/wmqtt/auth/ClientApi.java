@@ -12,7 +12,7 @@ import java.util.List;
  **/
 public interface ClientApi {
     /**
-     * 12小时
+     * 12小时 过期
      */
     Long TOKEN_EXPIRE = 12 * 3600 * 1000L;
     /**

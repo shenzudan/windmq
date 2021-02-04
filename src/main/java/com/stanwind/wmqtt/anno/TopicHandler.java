@@ -13,6 +13,11 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface TopicHandler {
+
+    /**
+     * topic 参数路径用"{}“包含，例如{name}
+     * @return
+     */
     String topic();
 
     /**

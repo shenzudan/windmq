@@ -17,6 +17,11 @@ public class STCUtil {
     @Autowired
     private MqttConfig config;
 
+    /**
+     * clientId转序列号
+     * @param clientId 按照规则会以"GID_DEVICE@@@@"开头
+     * @return
+     */
     public String cli2sn(String clientId) {
         if (clientId == null || clientId.isEmpty()) {
             return clientId;
@@ -27,6 +32,11 @@ public class STCUtil {
                 : clientId;
     }
 
+    /**
+     * 序列号转clientId
+     * @param sn 按照规则会以"GID_DEVICE@@@@"开头
+     * @return
+     */
     public String sn2cli(String sn) {
         if (sn == null) {
             return sn;

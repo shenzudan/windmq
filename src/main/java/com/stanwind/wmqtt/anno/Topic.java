@@ -2,6 +2,9 @@ package com.stanwind.wmqtt.anno;
 
 import java.lang.annotation.*;
 
+/**
+ * topic bean anno
+ */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

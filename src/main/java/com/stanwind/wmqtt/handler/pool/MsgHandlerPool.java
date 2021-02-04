@@ -35,10 +35,17 @@ public class MsgHandlerPool {
         }
     }
 
+    /**
+     * 投递任务
+     * @param task
+     */
     public void submitTask(Runnable task) {
         poolExecutor.submit(task);
     }
 
+    /**
+     * 内部类单例
+     */
     public static class Instance {
 
         public Instance() {

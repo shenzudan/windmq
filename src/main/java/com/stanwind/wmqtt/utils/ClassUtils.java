@@ -16,18 +16,24 @@ public class ClassUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(ClassUtils.class.getSimpleName());
 
+    /**
+     * 获取指定anno class
+     * @param packageName
+     * @param annotationClass
+     * @return
+     */
     public static List<Class<?>> getClassList(String packageName, Class<? extends Annotation> annotationClass) {
         List<Class<?>> classList = getClassList(packageName);
-        Iterator<Class<?>> iterator = classList.iterator();
-        while (iterator.hasNext()) {
-            Class<?> next = iterator.next();
-            if (!next.isAnnotationPresent(annotationClass)) {
-                iterator.remove();
-            }
-        }
+        classList.removeIf(next -> !next.isAnnotationPresent(annotationClass));
+
         return classList;
     }
 
+    /**
+     * 获取包下class列表
+     * @param packageName
+     * @return
+     */
     public static List<Class<?>> getClassList(String packageName) {
         List<Class<?>> classList = new LinkedList();
         try {
@@ -46,6 +52,12 @@ public class ClassUtils {
         return classList;
     }
 
+    /**
+     * addClass
+     * @param classList
+     * @param packagePath
+     * @param packageName
+     */
     private static void addClass(List<Class<?>> classList, String packagePath, String packageName) {
         try {
             File[] files = new File(packagePath).listFiles(new FileFilter() {
@@ -81,11 +93,22 @@ public class ClassUtils {
         }
     }
 
+    /**
+     * doAddClass
+     * @param classList
+     * @param className
+     */
     private static void doAddClass(List<Class<?>> classList, String className) {
         Class<?> cls = loadClass(className, false);
         classList.add(cls);
     }
 
+    /**
+     * loadClass
+     * @param className
+     * @param isInitialized
+     * @return
+     */
     public static Class<?> loadClass(String className, boolean isInitialized) {
         Class<?> cls;
         try {
@@ -96,6 +119,10 @@ public class ClassUtils {
         return cls;
     }
 
+    /**
+     * 获取当前线程classLoader
+     * @return
+     */
     public static ClassLoader getClassLoader() {
         return Thread.currentThread().getContextClassLoader();
     }

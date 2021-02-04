@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * MqttContext 上下文
+ * MqttContext 上下文 存储路径参数相关
  *
  * @author : Stan
  * @version : 1.0

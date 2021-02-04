@@ -16,6 +16,14 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
  **/
 public class AliSignSettingFactory implements SettingFactory {
 
+    /**
+     *
+     * @param serverURIs
+     * @param keepAliveInterval
+     * @param authBean
+     * @return
+     * @throws Exception
+     */
     @Override
     public MqttConnectOptions set(String[] serverURIs, Integer keepAliveInterval, AuthBean authBean)
             throws Exception {

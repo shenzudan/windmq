@@ -176,6 +176,10 @@ public class MqttConfig {
         return encCount;
     }
 
+    /**
+     * 配置鉴权基础数据包装bean
+     * @return
+     */
     @Bean
     public AuthBean authBean() {
         return new AuthBean().setInstanceId(aliInstance)
@@ -183,6 +187,10 @@ public class MqttConfig {
                 .setAccessKey(accessKey).setSecretKey(secretKey);
     }
 
+    /**
+     * 连接数据生成工厂
+     * @return
+     */
     @Bean
     public SettingFactory settingFactory() {
         //@ConditionOnBean
@@ -193,6 +201,10 @@ public class MqttConfig {
         }
     }
 
+    /**
+     * mqtt实例接口请求工具
+     * @return
+     */
     @Bean
     public ClientApi clientApi() {
         if (aliyun) {
@@ -216,6 +228,13 @@ public class MqttConfig {
         }
     }
 
+    /**
+     * message包装加密配置
+     * @param modelPackages
+     * @param encrypt
+     * @return
+     * @throws NoSuchMethodException
+     */
     @Bean
     public MqttMessageConverter bytesMessageConverter(@Value("${mqtt.model-packages:com.stanwind.wmqtt.message}") String modelPackages
             , IMsgEncrypt encrypt)
@@ -237,6 +256,13 @@ public class MqttConfig {
         return L_INSTANCE_ID;
     }
 
+    /**
+     * mqtt发送bean
+     * @param mqttMessageConverter
+     * @param settingFactory
+     * @return
+     * @throws Exception
+     */
     @Bean
     @ServiceActivator(inputChannel = CHANNEL_NAME_OUT)
     public MessageHandler mqttOutbound(MqttMessageConverter mqttMessageConverter, SettingFactory settingFactory)
@@ -258,6 +284,13 @@ public class MqttConfig {
         return messageHandler;
     }
 
+    /**
+     * mqtt接收bean
+     * @param mqttMessageConverter
+     * @param settingFactory
+     * @return
+     * @throws Exception
+     */
     @Bean
     @Primary
     public MessageProducer mqttInbound(MqttMessageConverter mqttMessageConverter, SettingFactory settingFactory)
@@ -290,6 +323,11 @@ public class MqttConfig {
         return new DirectChannel();
     }
 
+    /**
+     * 发送客户端holder
+     * @param producer
+     * @return
+     */
     @Bean
     public ProducerHolder getWindmq(MessageProducer producer) {
         return new ProducerHolder((MqttPahoMessageDrivenChannelAdapter) producer);

@@ -1,23 +1,17 @@
 package com.stanwind.wmqtt.utils;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64;
 
 public class Tools {
-    public static Properties loadProperties() {
-        Properties properties = new Properties();
-        try {
-            properties.load(ClassLoader.getSystemResourceAsStream("test.properties"));
-        } catch (IOException e) {
-        }
-        return properties;
-    }
 
     /**
      * 计算签名，参数分别是参数对以及密钥

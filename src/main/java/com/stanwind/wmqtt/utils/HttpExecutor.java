@@ -69,6 +69,11 @@ public class HttpExecutor {
         return 200;
     }
 
+    /**
+     * 初始化请求池
+     * @throws NoSuchAlgorithmException
+     * @throws KeyManagementException
+     */
     @PostConstruct
     protected void initHttpClient() throws NoSuchAlgorithmException, KeyManagementException {
         //        //HTTPS
@@ -136,6 +141,12 @@ public class HttpExecutor {
         return p;
     }
 
+    /**
+     * post请求
+     * @param path 请求路径
+     * @param params 请求参数
+     * @return
+     */
     public String doPost(String path, Map<String, ?> params) {
         CloseableHttpResponse httpResponse = null;
         try {
@@ -159,6 +170,12 @@ public class HttpExecutor {
         return null;
     }
 
+    /**
+     * get请求
+     * @param url 请求路径
+     * @param params 请求参数
+     * @return
+     */
     public String doGet(String url, Map<String, String> params) {
         CloseableHttpResponse httpResponse = null;
         try {

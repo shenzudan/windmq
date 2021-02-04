@@ -62,10 +62,23 @@ public class HandlerScanner implements ApplicationListener<ContextRefreshedEvent
         log.info("finish scan topic handlers");
     }
 
+    /**
+     * 正则topic判断
+     * 如果非full 且包含参数表达式 则用正则方式注册
+     * @param anno
+     * @return
+     */
     private boolean regFuzzy(TopicHandler anno) {
         return !anno.full() && anno.topic().contains("{") && anno.topic().contains("}");
     }
 
+    /**
+     * 包装处理方法
+     * @param anno
+     * @param beanType
+     * @param method
+     * @return
+     */
     private MsgHandlerDefinition createHandler(TopicHandler anno, Class<?> beanType, Method method) {
         MsgHandlerDefinition definition = new MsgHandlerDefinition().setClaz(beanType).setFull(anno.full())
                 .setMethod(method)

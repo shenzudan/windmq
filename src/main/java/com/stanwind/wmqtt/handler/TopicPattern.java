@@ -52,6 +52,11 @@ public class TopicPattern {
         }
     }
 
+    /**
+     * 路径参数topic生成匹配正则表达式
+     * @param topic
+     * @return
+     */
     public static TopicPatternDefinition prepare(String topic) {
         Map<String, Integer> id2pos = new HashMap<>();
 
@@ -74,10 +79,23 @@ public class TopicPattern {
         return new TopicPatternDefinition().setId2pos(id2pos).setPattern(Pattern.compile(rTopic)).setRegTxt(rTopic);
     }
 
+    /**
+     * 判断topic是匹配当前正则
+     * @param topic
+     * @param topicPatternDefinition
+     * @return
+     */
     public static boolean match(String topic, TopicPatternDefinition topicPatternDefinition) {
         return topicPatternDefinition.getPattern().matcher(topic).matches();
     }
 
+    /**
+     * 获取参数位置映射
+     * key: 参数名 value: 结果数组下标
+     * @param topic
+     * @param topicPatternDefinition
+     * @return
+     */
     public static Map<String, String> getValueMap(String topic, TopicPatternDefinition topicPatternDefinition) {
         Matcher m = topicPatternDefinition.getPattern().matcher(topic);
         Map<String, String> values = new HashMap<>();

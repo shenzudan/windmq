@@ -31,6 +31,9 @@ public class MQTTHandleTask implements Runnable {
         this.msg = msg;
     }
 
+    /**
+     * 反射调用包装方法
+     */
     @Override
     public void run() {
         Object bean = map.get(definition.getClaz());

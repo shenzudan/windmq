@@ -29,9 +29,15 @@ import org.springframework.stereotype.Service;
 public class MqttMsgDispatcher implements MessageHandler {
 
     private static final Logger log = LoggerFactory.getLogger(MqttMsgDispatcher.class);
+
     @Autowired
     private IMessageService messageService;
 
+    /**
+     * 消息分发器
+     * @param message
+     * @throws MessagingException
+     */
     @ServiceActivator(inputChannel = CHANNEL_NAME_IN)
     @Override
     public void handleMessage(Message<?> message) throws MessagingException {

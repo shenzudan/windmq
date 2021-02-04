@@ -35,6 +35,10 @@ public class PlatformUtils {
         }
     }
 
+    /**
+     * 获取机器mac地址
+     * @return
+     */
     public static final String getMACAddress() {
         Enumeration allNetInterfaces = null;
         try {
