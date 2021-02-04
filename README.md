@@ -18,7 +18,15 @@
 - 消息处理池(CPU核心数*2 + 1, )
 - Topic注解匹配消息处理,支持模糊匹配(正则实现，可取topic路径参数)和精确匹配
 
-### spring-boot依赖
+### 默认规则
+- 对客户端发送的TOPIC均以 IOT_CLIENT/xxx形式 (配置可修改)
+- 对服务端发送的TOPIC均以 IOT_SERVER/xxx形式 (配置可修改)
+- 加密行需在payload开头2 byte表示采用哪一行数据进行加密 (若启用加密则IOT开头的topic均会加密，详见：com.stanwind.wmqtt.security.IotDeviceMessageEncrypt)
+- 为兼容阿里云 clientId均以GID_DEVICE@@@开头 (配置可修改)
+- Server采用签名登录，阿里云环境下Client分配的账号密码使用token登录，鉴权信息有效时长12小时
+- topic中{instanceId}表示匹配当前实例ID，{deviceId}表示匹配当前设备序列号(详情: com.stanwind.wmqtt.MqttConfig)
+
+### 默认spring-boot依赖
 ```maven
  <parent>
     <groupId>org.springframework.boot</groupId>
@@ -28,13 +36,51 @@
   </parent>
 ```
 
-### 默认规则
-- 对客户端发送的TOPIC均以 IOT_CLIENT/xxx形式 (配置可修改)
-- 对服务端发送的TOPIC均以 IOT_SERVER/xxx形式 (配置可修改)
-- 加密行需在payload开头2 byte表示采用哪一行数据进行加密 (若启用加密则IOT开头的topic均会加密，详见：com.stanwind.wmqtt.security.IotDeviceMessageEncrypt)
-- 为兼容阿里云 clientId均以GID_DEVICE@@@开头 (配置可修改)
-- Server采用签名登录，阿里云环境下Client分配的账号密码使用token登录，鉴权信息有效时长12小时
-- topic中{instanceId}表示匹配当前实例ID，{deviceId}表示匹配当前设备序列号(详情: com.stanwind.wmqtt.MqttConfig)
+### 样例工程
+https://gitee.com/sense7/windmq-demo.git
+
+### 参考依赖
+```xml
+    <!-- windmq dependency -->
+    <dependency>
+      <groupId>com.stanwind</groupId>
+      <artifactId>spring-boot-windmq</artifactId>
+      <version>1.0.0-RELEASE</version>
+    </dependency>
+
+    <!-- MQTT -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-integration</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.integration</groupId>
+      <artifactId>spring-integration-mqtt</artifactId>
+      <exclusions>
+        <exclusion>
+          <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+          <groupId>org.eclipse.paho</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!-- 1.2.0 版本有bug -->
+    <dependency>
+      <groupId>org.eclipse.paho</groupId>
+      <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+      <version>1.2.1</version>
+    </dependency>
+```
+
+### 启用windmq
+```java
+@EnableWindMQ
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+public class DemoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+}
+```
 
 ### 使用样例
 - 临时订阅/取消(注入ProducerHolder)

@@ -13,18 +13,15 @@ import com.stanwind.wmqtt.message.BytesMessageConverter;
 import com.stanwind.wmqtt.security.DefMessageEncrypt;
 import com.stanwind.wmqtt.security.IMsgEncrypt;
 import com.stanwind.wmqtt.security.TableMsgEncrypt;
-import com.stanwind.wmqtt.utils.HttpExecutor;
 import com.stanwind.wmqtt.utils.PlatformUtils;
-import jdk.nashorn.internal.objects.annotations.Getter;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.channel.DirectChannel;
@@ -179,9 +176,6 @@ public class MqttConfig {
         return encCount;
     }
 
-    @Autowired
-    private ServerProperties serverProperties;
-
     @Bean
     public AuthBean authBean() {
         return new AuthBean().setInstanceId(aliInstance)
@@ -237,7 +231,7 @@ public class MqttConfig {
      */
     public String getInstanceId() {
         if (StringUtils.isEmpty(L_INSTANCE_ID)) {
-            L_INSTANCE_ID = PlatformUtils.getMACAddress() + "_" + serverProperties.getPort();
+            L_INSTANCE_ID = PlatformUtils.getMACAddress() + "_" + PlatformUtils.JVMPid();
         }
 
         return L_INSTANCE_ID;
@@ -265,6 +259,7 @@ public class MqttConfig {
     }
 
     @Bean
+    @Primary
     public MessageProducer mqttInbound(MqttMessageConverter mqttMessageConverter, SettingFactory settingFactory)
             throws Exception {
         String clientId = clientIdPrefix + "_inbound_" + getInstanceId();

@@ -1,6 +1,5 @@
 package com.stanwind.wmqtt.utils;
 
-import com.stanwind.wmqtt.MQTTSubscribedListener;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;

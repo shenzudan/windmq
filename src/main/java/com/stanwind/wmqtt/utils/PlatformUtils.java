@@ -91,7 +91,7 @@ public class PlatformUtils {
     /**
      * 获取当前JVM 的进程ID
      */
-    public static final int JVMPid() {
+    public static int JVMPid() {
         try {
             RuntimeMXBean runtime = ManagementFactory.getRuntimeMXBean();
             Field jvm = runtime.getClass().getDeclaredField("jvm");
