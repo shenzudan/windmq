@@ -149,6 +149,10 @@
           <links>
             <link>http://docs.oracle.com/javase/8/docs/api</link>
           </links>
+          <!-- jdk1.8要加上，1.7要去掉，否则会报错 -->
+          <additionalJOptions>
+            <additionalJOption>-Xdoclint:none</additionalJOption>
+          </additionalJOptions>
         </configuration>
       </plugin>
       <plugin>

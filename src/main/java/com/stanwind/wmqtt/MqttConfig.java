@@ -178,7 +178,7 @@ public class MqttConfig {
 
     /**
      * 配置鉴权基础数据包装bean
-     * @return
+     * @return bean
      */
     @Bean
     public AuthBean authBean() {
@@ -189,7 +189,7 @@ public class MqttConfig {
 
     /**
      * 连接数据生成工厂
-     * @return
+     * @return bean
      */
     @Bean
     public SettingFactory settingFactory() {
@@ -203,7 +203,7 @@ public class MqttConfig {
 
     /**
      * mqtt实例接口请求工具
-     * @return
+     * @return bean
      */
     @Bean
     public ClientApi clientApi() {
@@ -215,7 +215,8 @@ public class MqttConfig {
     }
 
     /**
-     * //固定为查表加密
+     * 固定为查表加密
+     * @return 加密bean
      */
     @Bean
     public IMsgEncrypt messageEncrypt() {
@@ -232,7 +233,7 @@ public class MqttConfig {
      * message包装加密配置
      * @param modelPackages
      * @param encrypt
-     * @return
+     * @return bean
      * @throws NoSuchMethodException
      */
     @Bean
@@ -247,6 +248,7 @@ public class MqttConfig {
 
     /**
      * 实例名规则
+     * @return 当前运行实例名
      */
     public String getInstanceId() {
         if (StringUtils.isEmpty(L_INSTANCE_ID)) {
@@ -260,7 +262,7 @@ public class MqttConfig {
      * mqtt发送bean
      * @param mqttMessageConverter
      * @param settingFactory
-     * @return
+     * @return 消息处理器
      * @throws Exception
      */
     @Bean
@@ -288,7 +290,7 @@ public class MqttConfig {
      * mqtt接收bean
      * @param mqttMessageConverter
      * @param settingFactory
-     * @return
+     * @return 消息发送客户端
      * @throws Exception
      */
     @Bean
@@ -326,7 +328,7 @@ public class MqttConfig {
     /**
      * 发送客户端holder
      * @param producer
-     * @return
+     * @return holder
      */
     @Bean
     public ProducerHolder getWindmq(MessageProducer producer) {
