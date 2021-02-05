@@ -29,19 +29,12 @@
 - Server采用签名登录，阿里云环境下Client分配的账号密码使用token登录，鉴权信息有效时长12小时
 - topic中{instanceId}表示匹配当前实例ID，{deviceId}表示匹配当前设备序列号(详情: com.stanwind.wmqtt.MqttConfig)
 
-### 默认spring-boot依赖
-```maven
- <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.0.7.RELEASE</version>
-    <relativePath/> <!-- lookup parent from repository -->
-  </parent>
-```
+### springboot支持版本
+- 2.0.X.RELEASE
 
 ### 项目仓库
 ```xml
-    <dependency>
+<dependency>
   <groupId>com.stanwind</groupId>
   <artifactId>spring-boot-windmq</artifactId>
   <version>1.0.0-RELEASE</version>
@@ -53,33 +46,32 @@ https://gitee.com/sense7/windmq-demo.git
 
 ### 参考依赖
 ```xml
-    <!-- windmq dependency -->
+<!-- windmq dependency -->
 <dependency>
   <groupId>com.stanwind</groupId>
   <artifactId>spring-boot-windmq</artifactId>
   <version>1.0.0-RELEASE</version>
 </dependency>
 
-  <!-- MQTT -->
+<!-- MQTT -->
 <dependency>
-<groupId>org.springframework.boot</groupId>
-<artifactId>spring-boot-starter-integration</artifactId>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-integration</artifactId>
+<dependency>
+  <groupId>org.springframework.integration</groupId>
+  <artifactId>spring-integration-mqtt</artifactId>
+  <exclusions>
+    <exclusion>
+      <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+      <groupId>org.eclipse.paho</groupId>
+    </exclusion>
+  </exclusions>
 </dependency>
+<!-- 1.2.0 版本有bug -->
 <dependency>
-<groupId>org.springframework.integration</groupId>
-<artifactId>spring-integration-mqtt</artifactId>
-<exclusions>
-  <exclusion>
-    <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-    <groupId>org.eclipse.paho</groupId>
-  </exclusion>
-</exclusions>
-</dependency>
-  <!-- 1.2.0 版本有bug -->
-<dependency>
-<groupId>org.eclipse.paho</groupId>
-<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-<version>1.2.1</version>
+  <groupId>org.eclipse.paho</groupId>
+  <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+  <version>1.2.1</version>
 </dependency>
 ```
 
