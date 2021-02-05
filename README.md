@@ -36,6 +36,15 @@
   </parent>
 ```
 
+### 项目仓库
+```xml
+    <dependency>
+      <groupId>com.stanwind</groupId>
+      <artifactId>spring-boot-windmq</artifactId>
+      <version>1.0.0-RELEASE</version>
+    </dependency>
+```
+
 ### 样例工程
 https://gitee.com/sense7/windmq-demo.git
 
