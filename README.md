@@ -1,15 +1,18 @@
-# windmq - MQTT快速开发脚手架 
+# windmq - MQTT快速开发脚手架
+<a href="https://gitee.com/sense7/windmq/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202-blue" /></a>
+<a href='https://gitee.com/sense7/windmq/stargazers'><img src='https://gitee.com/sense7/windmq/badge/star.svg?theme=dark' alt='star'></img></a>
+<a href='https://gitee.com/sense7/windmq/members'><img src='https://gitee.com/sense7/windmq/badge/fork.svg?theme=dark' alt='fork'></img></a>
 
 ### 前言
 快速开发处理MQTT topic，一个方法注解就搞定
 
-原样从项目里搬出来的，产线阿里云，测试EMQ，需要统一支持下 
+原样从项目里搬出来的，产线阿里云，测试EMQ，需要统一支持下
 
-有些config和bean不太合理，过年有空整理下 
+有些config和bean不太合理，过年有空整理下
 
-此项目整合springboot部分和topic规则搬运了一个项目，刚接触这个，十分感谢前辈的经验https://gitee.com/yezhihao/mqtt-sample 
+此项目整合springboot部分和topic规则搬运了一个项目，刚接触这个，十分感谢前辈的经验https://gitee.com/yezhihao/mqtt-sample
 
-关于共享订阅的高可用兼容，如果有方案还望各位不吝赐教 
+关于共享订阅的高可用兼容，如果有方案还望各位不吝赐教
 
 ### 功能
 - MQTT客户端登录凭证分配(ACL支持阿里云\EMQ目前只支持账号密码，可自定义实现)
@@ -39,10 +42,10 @@
 ### 项目仓库
 ```xml
     <dependency>
-      <groupId>com.stanwind</groupId>
-      <artifactId>spring-boot-windmq</artifactId>
-      <version>1.0.0-RELEASE</version>
-    </dependency>
+  <groupId>com.stanwind</groupId>
+  <artifactId>spring-boot-windmq</artifactId>
+  <version>1.0.0-RELEASE</version>
+</dependency>
 ```
 
 ### 样例工程
@@ -51,33 +54,33 @@ https://gitee.com/sense7/windmq-demo.git
 ### 参考依赖
 ```xml
     <!-- windmq dependency -->
-    <dependency>
-      <groupId>com.stanwind</groupId>
-      <artifactId>spring-boot-windmq</artifactId>
-      <version>1.0.0-RELEASE</version>
-    </dependency>
+<dependency>
+  <groupId>com.stanwind</groupId>
+  <artifactId>spring-boot-windmq</artifactId>
+  <version>1.0.0-RELEASE</version>
+</dependency>
 
-    <!-- MQTT -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-integration</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.integration</groupId>
-      <artifactId>spring-integration-mqtt</artifactId>
-      <exclusions>
-        <exclusion>
-          <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-          <groupId>org.eclipse.paho</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <!-- 1.2.0 版本有bug -->
-    <dependency>
-      <groupId>org.eclipse.paho</groupId>
-      <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-      <version>1.2.1</version>
-    </dependency>
+  <!-- MQTT -->
+<dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-integration</artifactId>
+</dependency>
+<dependency>
+<groupId>org.springframework.integration</groupId>
+<artifactId>spring-integration-mqtt</artifactId>
+<exclusions>
+  <exclusion>
+    <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+    <groupId>org.eclipse.paho</groupId>
+  </exclusion>
+</exclusions>
+</dependency>
+  <!-- 1.2.0 版本有bug -->
+<dependency>
+<groupId>org.eclipse.paho</groupId>
+<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+<version>1.2.1</version>
+</dependency>
 ```
 
 ### 启用windmq
@@ -95,26 +98,26 @@ public class DemoApplication {
 - 临时订阅/取消(注入ProducerHolder)
 ```java
 void addTopic(String... topic);
-void addTopic(String topic, int qos);
-void addTopics(String[] topic, int[] qos);
-void removeTopic(String... topic);
+        void addTopic(String topic, int qos);
+        void addTopics(String[] topic, int[] qos);
+        void removeTopic(String... topic);
 ```
 
 - 消息发送 IMessageService
 ```java
 void notify(String deviceId, Object payload);
-void sendToTopic(String topic, Object payload);
-MqttResponse request(String deviceId, MqttRequest payload);
-MqttResponse request(String deviceId, MqttRequest payload, long timeout);
+        void sendToTopic(String topic, Object payload);
+        MqttResponse request(String deviceId, MqttRequest payload);
+        MqttResponse request(String deviceId, MqttRequest payload, long timeout);
 ```
 
 - 消息处理
 ```java
 @TopicHandler(topic = "$SYS/brokers/{node}/clients/{deviceId}/connected")
 public void connected(MQTTMsg msg) {
-    ClientReqVO clientReqVO = JSONObject.parseObject(msg.getPayload().toString(), ClientReqVO.class);
-    process(clientReqVO);
-}
+        ClientReqVO clientReqVO = JSONObject.parseObject(msg.getPayload().toString(), ClientReqVO.class);
+        process(clientReqVO);
+        }
 ```
 
 - 获取路径参数
@@ -135,16 +138,16 @@ public class DemoHandler extends BaseTopicHandler {
 ```java
 @TopicHandler(topic = "IOT_SERVER/ping/{instanceId}/{taskId}")
 public void uploadPingData(MQTTMsg msg) {
-    if (!currentHandle()) {
+        if (!currentHandle()) {
         log.debug("非当前实例任务: [{}]", msg);
         return;
-    }
+        }
 
-    if (接收完毕) {
+        if (接收完毕) {
         //取消订阅
         mqttConfig.removeTopic(msg.getTopic());
-    }
-}
+        }
+        }
 ```
 
 - 生成客户端链接数据
@@ -154,21 +157,21 @@ private MqttConfig mqttConfig;
 @Autowired
 private ClientApi clientApi;
 public MqttConnVO generateMqttConnConfig(String sn) throws Exception {
-    String r = mqttConfig.getAclRead().replaceAll(DEVICE_ID, stcUtil.sn2cli(sn));
-    String w = mqttConfig.getAclWrite().replaceAll(DEVICE_ID, stcUtil.sn2cli(sn));
-    ConnData connData = clientApi.getTokenConn(Utils.splitToList(r), Utils.splitToList(w));
-    MqttConnVO vo = new MqttConnVO();
-    //缺省外网地址则返回统一地址 否则返回外网地址
-    vo.setUris(ArrayUtils.isEmpty(mqttConfig.getPubServerURIs()) ? mqttConfig.getServerURIs() : mqttConfig.getPubServerURIs());
-    vo.setReadTopics(r);
-    vo.setWriteTopics(w);
-    vo.setEnc(mqttConfig.getEncTable());
-    vo.setEncSize(mqttConfig.getEncCount());
-    BeanUtils.copyProperties(connData, vo);
-    log.info("{} 获取mqtt: {}", sn, vo);
+        String r = mqttConfig.getAclRead().replaceAll(DEVICE_ID, stcUtil.sn2cli(sn));
+        String w = mqttConfig.getAclWrite().replaceAll(DEVICE_ID, stcUtil.sn2cli(sn));
+        ConnData connData = clientApi.getTokenConn(Utils.splitToList(r), Utils.splitToList(w));
+        MqttConnVO vo = new MqttConnVO();
+        //缺省外网地址则返回统一地址 否则返回外网地址
+        vo.setUris(ArrayUtils.isEmpty(mqttConfig.getPubServerURIs()) ? mqttConfig.getServerURIs() : mqttConfig.getPubServerURIs());
+        vo.setReadTopics(r);
+        vo.setWriteTopics(w);
+        vo.setEnc(mqttConfig.getEncTable());
+        vo.setEncSize(mqttConfig.getEncCount());
+        BeanUtils.copyProperties(connData, vo);
+        log.info("{} 获取mqtt: {}", sn, vo);
 
-    return vo;
-}
+        return vo;
+        }
 
 @Data
 public class MqttConnVO implements Serializable {
