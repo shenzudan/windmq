@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.stanwind</groupId>
   <artifactId>spring-boot-windmq</artifactId>
-  <version>1.0.0-RELEASE</version>
+  <version>1.0.1-SNAPSHOT</version>
 
   <packaging>jar</packaging>
   <name>windmq</name>
@@ -132,30 +132,32 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-javadoc</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <show>public</show>
-          <charset>UTF-8</charset>
-          <encoding>UTF-8</encoding>
-          <docencoding>UTF-8</docencoding>
-          <links>
-            <link>http://docs.oracle.com/javase/8/docs/api</link>
-          </links>
-          <!-- jdk1.8要加上，1.7要去掉，否则会报错 -->
-          <additionalJOptions>
-            <additionalJOption>-Xdoclint:none</additionalJOption>
-          </additionalJOptions>
-        </configuration>
-      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-javadoc-plugin</artifactId>-->
+<!--        <version>2.9</version>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <id>attach-javadoc</id>-->
+<!--            <goals>-->
+<!--              <goal>jar</goal>-->
+<!--            </goals>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--        <configuration>-->
+<!--          <show>public</show>-->
+<!--          <charset>UTF-8</charset>-->
+<!--          <encoding>UTF-8</encoding>-->
+<!--          <docencoding>UTF-8</docencoding>-->
+<!--          <links>-->
+<!--            <link>http://docs.oracle.com/javase/8/docs/api</link>-->
+<!--          </links>-->
+<!--          &lt;!&ndash; jdk1.8要加上，1.7要去掉，否则会报错 &ndash;&gt;-->
+<!--          <additionalJOptions>-->
+<!--            <additionalJOption>-Xdoclint:none</additionalJOption>-->
+<!--          </additionalJOptions>-->
+<!--        </configuration>-->
+<!--      </plugin>-->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -173,24 +175,24 @@
           </archive>
         </configuration>
       </plugin>
-      <plugin>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-            <configuration>
-              <executable>gpg</executable>
-              <homedir>${gpg.homedir}</homedir>
-              <keyname>${gpg.keyname}</keyname>
-              <passphrase>${gpg.passphrase}</passphrase>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+<!--      <plugin>-->
+<!--        <artifactId>maven-gpg-plugin</artifactId>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <id>sign-artifacts</id>-->
+<!--            <phase>verify</phase>-->
+<!--            <goals>-->
+<!--              <goal>sign</goal>-->
+<!--            </goals>-->
+<!--            <configuration>-->
+<!--              <executable>gpg</executable>-->
+<!--              <homedir>${gpg.homedir}</homedir>-->
+<!--              <keyname>${gpg.keyname}</keyname>-->
+<!--              <passphrase>${gpg.passphrase}</passphrase>-->
+<!--            </configuration>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--      </plugin>-->
     </plugins>
   </build>
   <distributionManagement>
