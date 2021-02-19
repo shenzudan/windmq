@@ -90,26 +90,26 @@ public class DemoApplication {
 - 临时订阅/取消(注入ProducerHolder)
 ```java
 void addTopic(String... topic);
-        void addTopic(String topic, int qos);
-        void addTopics(String[] topic, int[] qos);
-        void removeTopic(String... topic);
+void addTopic(String topic, int qos);
+void addTopics(String[] topic, int[] qos);
+void removeTopic(String... topic);
 ```
 
 - 消息发送 IMessageService
 ```java
 void notify(String deviceId, Object payload);
-        void sendToTopic(String topic, Object payload);
-        MqttResponse request(String deviceId, MqttRequest payload);
-        MqttResponse request(String deviceId, MqttRequest payload, long timeout);
+void sendToTopic(String topic, Object payload);
+MqttResponse request(String deviceId, MqttRequest payload);
+MqttResponse request(String deviceId, MqttRequest payload, long timeout);
 ```
 
 - 消息处理
 ```java
 @TopicHandler(topic = "$SYS/brokers/{node}/clients/{deviceId}/connected")
 public void connected(MQTTMsg msg) {
-        ClientReqVO clientReqVO = JSONObject.parseObject(msg.getPayload().toString(), ClientReqVO.class);
-        process(clientReqVO);
-        }
+    ClientReqVO clientReqVO = JSONObject.parseObject(msg.getPayload().toString(), ClientReqVO.class);
+    process(clientReqVO);
+}
 ```
 
 - 获取路径参数
@@ -130,16 +130,16 @@ public class DemoHandler extends BaseTopicHandler {
 ```java
 @TopicHandler(topic = "IOT_SERVER/ping/{instanceId}/{taskId}")
 public void uploadPingData(MQTTMsg msg) {
-        if (!currentHandle()) {
+    if (!currentHandle()) {
         log.debug("非当前实例任务: [{}]", msg);
         return;
-        }
+    }
 
-        if (接收完毕) {
+    if (接收完毕) {
         //取消订阅
-        mqttConfig.removeTopic(msg.getTopic());
-        }
-        }
+        producerHolder.removeTopic(msg.getTopic());
+    }
+}
 ```
 
 - 生成客户端链接数据
@@ -149,21 +149,21 @@ private MqttConfig mqttConfig;
 @Autowired
 private ClientApi clientApi;
 public MqttConnVO generateMqttConnConfig(String sn) throws Exception {
-        String r = mqttConfig.getAclRead().replaceAll(DEVICE_ID, stcUtil.sn2cli(sn));
-        String w = mqttConfig.getAclWrite().replaceAll(DEVICE_ID, stcUtil.sn2cli(sn));
-        ConnData connData = clientApi.getTokenConn(Utils.splitToList(r), Utils.splitToList(w));
-        MqttConnVO vo = new MqttConnVO();
-        //缺省外网地址则返回统一地址 否则返回外网地址
-        vo.setUris(ArrayUtils.isEmpty(mqttConfig.getPubServerURIs()) ? mqttConfig.getServerURIs() : mqttConfig.getPubServerURIs());
-        vo.setReadTopics(r);
-        vo.setWriteTopics(w);
-        vo.setEnc(mqttConfig.getEncTable());
-        vo.setEncSize(mqttConfig.getEncCount());
-        BeanUtils.copyProperties(connData, vo);
-        log.info("{} 获取mqtt: {}", sn, vo);
+    String r = mqttConfig.getAclRead().replaceAll(DEVICE_ID, stcUtil.sn2cli(sn));
+    String w = mqttConfig.getAclWrite().replaceAll(DEVICE_ID, stcUtil.sn2cli(sn));
+    ConnData connData = clientApi.getTokenConn(Utils.splitToList(r), Utils.splitToList(w));
+    MqttConnVO vo = new MqttConnVO();
+    //缺省外网地址则返回统一地址 否则返回外网地址
+    vo.setUris(ArrayUtils.isEmpty(mqttConfig.getPubServerURIs()) ? mqttConfig.getServerURIs() : mqttConfig.getPubServerURIs());
+    vo.setReadTopics(r);
+    vo.setWriteTopics(w);
+    vo.setEnc(mqttConfig.getEncTable());
+    vo.setEncSize(mqttConfig.getEncCount());
+    BeanUtils.copyProperties(connData, vo);
+    log.info("{} 获取mqtt: {}", sn, vo);
 
-        return vo;
-        }
+    return vo;
+}
 
 @Data
 public class MqttConnVO implements Serializable {

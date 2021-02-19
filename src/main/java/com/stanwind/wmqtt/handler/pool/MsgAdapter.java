@@ -1,8 +1,10 @@
 package com.stanwind.wmqtt.handler.pool;
 
 import com.stanwind.wmqtt.handler.TopicPattern;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * MsgAdapter 协议分拨器 目前先String消息 直接解析TOPIC
@@ -135,11 +137,31 @@ public class MsgAdapter {
         return (MsgAdapter) FUZZY_TOPIC.get(topic);
     }
 
+
+    private static Map<String /* topic key */, MsgQueueWrapper> MSG_QUEUE = new HashMap<>();
+
+    public MsgQueueWrapper getMsgQueue(String key) {
+        if (!MSG_QUEUE.containsKey(key)) {
+            synchronized (MsgAdapter.class) {
+                if (!MSG_QUEUE.containsKey(key)) {
+                    MSG_QUEUE.put(key, new MsgQueueWrapper());
+                }
+            }
+        }
+
+        return MSG_QUEUE.get(key);
+    }
+
     /**
      * 消息扔入线程池处理当前消息
      * @param msg
      */
-    public void processMsg(MQTTMsg msg) {
-        MsgHandlerPool.Instance.getInstance().submitTask(new MQTTHandleTask(this.handler, msg));
+    public void processMsg(MQTTMsg msg) throws InterruptedException {
+        MsgQueueWrapper msgQueueWrapper = getMsgQueue(this.handler.getTopic());
+        /* 获取待处理的消息队列 */
+        LinkedBlockingQueue<MQTTMsg> msgQueue = msgQueueWrapper.getMsgQueue(msg);
+        if (msgQueue != null) {
+            MsgHandlerPool.Instance.getInstance().submitTask(new MQTTHandleTask(this.handler, msgQueue, msgQueueWrapper, msg.getTopic()));
+        }
     }
 }
