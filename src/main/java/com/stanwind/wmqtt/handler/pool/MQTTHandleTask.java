@@ -26,13 +26,13 @@ public class MQTTHandleTask implements Runnable {
      */
     public static final Map<Class<?>, Object> map = new ConcurrentHashMap<>();
     private MsgHandlerDefinition definition;
-    private MQTTMsg msg;
     private LinkedBlockingQueue<MQTTMsg> queue;
     private MsgQueueWrapper wrapper;
     /* 线程任务启动的 topic */
     private String topic;
 
-    public MQTTHandleTask(MsgHandlerDefinition definition, LinkedBlockingQueue<MQTTMsg> queue, MsgQueueWrapper wrapper, String topic) {
+    public MQTTHandleTask(MsgHandlerDefinition definition, LinkedBlockingQueue<MQTTMsg> queue, MsgQueueWrapper wrapper,
+            String topic) {
         this.definition = definition;
         this.queue = queue;
         this.wrapper = wrapper;
@@ -70,7 +70,7 @@ public class MQTTHandleTask implements Runnable {
             }
         } while (loop);
 
-        log.info("当前线程{}单次处理mqtt消息{}条", topic, count);
+        log.debug("当前线程{}单次处理mqtt消息{}条", topic, count);
     }
 
     private void process1(Object bean, MQTTMsg msg) {
