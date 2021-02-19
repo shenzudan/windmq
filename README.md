@@ -97,10 +97,58 @@ void removeTopic(String... topic);
 
 - 消息发送 IMessageService
 ```java
+/**
+ * 发送消息给device 需要payload Class上有@Topic
+ * @param deviceId
+ * @param payload
+ */
 void notify(String deviceId, Object payload);
-void sendToTopic(String topic, Object payload);
+
+/**
+ * 发送消息到topic
+ * @param topic
+ * @param payload
+ */
+void notifyToTopic(String topic, Object payload);
+
+/**
+ * 同步确认发送消息给设备
+ * @param deviceId
+ * @param payload
+ * @return
+ */
 MqttResponse request(String deviceId, MqttRequest payload);
+
+/**
+ * 同步确认发送消息给设备
+ * @param deviceId
+ * @param payload
+ * @param timeout 等待超时 ms
+ * @return
+ */
 MqttResponse request(String deviceId, MqttRequest payload, long timeout);
+
+/**
+ * 响应同步消息
+ * @param message
+ * @return
+ */
+boolean response(Message<MqttResponse> message);
+
+/**
+* 客户端请求通用回复
+* @param messageId
+* @param deviceId
+* @param result
+*/
+void sendCommonResponse(Long messageId, String deviceId, Integer result);
+
+/**
+* 客户端请求通用回复
+* @param messageId
+* @param deviceId
+*/
+void sendCommonResponse(Long messageId, String deviceId);
 ```
 
 - 消息处理
